@@ -1297,6 +1297,8 @@ RtpsUdpDataLink::RtpsReader::process_heartbeat_i(const RTPS::HeartBeatSubmessage
                                                  const RepoId& src,
                                                  MetaSubmessageVec&)
 {
+  const GuidConverter rc(id_), wc(src);
+  ACE_DEBUG((LM_DEBUG, "(%P|%t) RtpsUdpDataLink::RtpsReader::process_heartbeat_i- Reader %C got heartbeat from Writer %C\n", OPENDDS_STRING(rc).c_str(), OPENDDS_STRING(wc).c_str()));
   ACE_GUARD_RETURN(ACE_Thread_Mutex, g, mutex_, false);
   RtpsUdpDataLink_rch link = link_.lock();
   const WriterInfoMap::iterator wi = remote_writers_.find(src);
@@ -2773,6 +2775,8 @@ RtpsUdpDataLink::durability_resend(TransportQueueElement* element)
 void
 RtpsUdpDataLink::send_heartbeats()
 {
+  ACE_DEBUG((LM_DEBUG, "(%P|%t) RtpsUdpDataLink::send_heartbeats - begin\n"));
+
   OPENDDS_VECTOR(CallbackType) readerDoesNotExistCallbacks;
   OPENDDS_VECTOR(TransportQueueElement*) pendingCallbacks;
 
@@ -2829,6 +2833,7 @@ RtpsUdpDataLink::send_heartbeats()
     }
   }
 
+
   for (WtaMap::const_iterator pos = writers_to_advertise.begin(),
          limit = writers_to_advertise.end();
        pos != limit;
@@ -2848,6 +2853,8 @@ RtpsUdpDataLink::send_heartbeats()
 
     meta_submessages.push_back(meta_submessage);
   }
+
+  ACE_DEBUG((LM_DEBUG, "(%P|%t) RtpsUdpDataLink::send_heartbeats - Sending %d submessages from %d reliable writers and %d writers_to_adverise\n", meta_submessages.size(), writers.size(), writers_to_advertise.size()));
 
   send_bundled_submessages(meta_submessages);
 
