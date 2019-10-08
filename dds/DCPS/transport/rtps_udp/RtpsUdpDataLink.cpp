@@ -1863,6 +1863,12 @@ RtpsUdpDataLink::send_bundled_submessages(MetaSubmessageVec& meta_submessages)
       ser << res.sm_;
       prev_dst = dst;
     }
+    ACE_DEBUG((LM_DEBUG, "(%P|%t) RtpsUdpDataLink::send_bundled_submessages - Writing %d Bundled Submessages to addresses: \n", meta_submessage_bundles[i].size()));
+    for (AddrSet::const_iterator it = meta_submessage_bundle_addrs[i].begin(); it != meta_submessage_bundle_addrs[i].end(); ++it) {
+      ACE_TCHAR buffer[64];
+      it->addr_to_string(buffer, 64);
+      ACE_DEBUG((LM_DEBUG, "(%P|%t)   - %C\n", buffer));
+    }
     send_strategy()->send_rtps_control(mb_acknack, meta_submessage_bundle_addrs[i]);
   }
 }
