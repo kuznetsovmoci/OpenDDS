@@ -2939,6 +2939,10 @@ RtpsUdpDataLink::RtpsWriter::gather_heartbeats(OPENDDS_VECTOR(TransportQueueElem
     }
   }
 
+  const GuidConverter wc(id_);
+  ACE_DEBUG((LM_DEBUG, "(%P|%t) RtpsDataLink::RtpsWriter::gather_heartbeats - writer %C - is_final: %d, has_data: %d, has_durable_data :%d, remote_readers_.size() = %d, to_guids_.size() = %d, pre_assoc_hb_guids.size() = %d\n", OPENDDS_STRING(wc).c_str(), is_final, has_data, has_durable_data, remote_readers_.size(), meta_submessage.to_guids_.size(), pre_assoc_hb_guids.size()));
+
+
   const SequenceNumber firstSN = (durable_ || !has_data) ? 1 : send_buff_->low(),
     lastSN = std::max(durable_max, has_data ? send_buff_->high() : SequenceNumber::ZERO());
   using namespace OpenDDS::RTPS;
