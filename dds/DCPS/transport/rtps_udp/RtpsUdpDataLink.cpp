@@ -2875,10 +2875,12 @@ RtpsUdpDataLink::RtpsWriter::gather_heartbeats(OPENDDS_VECTOR(TransportQueueElem
                                                bool allow_final,
                                                MetaSubmessageVec& meta_submessages)
 {
+  ACE_DEBUG((LM_DEBUG, "Entering gather_heartbeats\n"));
   ACE_GUARD_RETURN(ACE_Thread_Mutex, g, mutex_, false);
 
   RtpsUdpDataLink_rch link = link_.lock();
   if (!link) {
+    ACE_DEBUG((LM_DEBUG, "Exiting gather_heartbeats\n"));
     return false;
   }
 
