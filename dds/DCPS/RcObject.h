@@ -103,8 +103,10 @@ namespace DCPS {
     ACE_Guard<ACE_SYNCH_MUTEX> guard(mx_);
     if (! expired_) {
       ptr_->_add_ref();
+ 	    ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) WeakObject::lock - not expired\n")));
       return ptr_;
     }
+    ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) WeakObject::lock - expired\n")));
     return 0;
   }
 
@@ -133,6 +135,7 @@ namespace DCPS {
 
     WeakRcHandle(const RcHandle<T>& rch)
       : weak_object_(rch.in() ? rch.in()->_get_weak_object() : 0) {
+      ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) WeakRcHandle::WeakRcHandle - weak_object_: %@\n"), weak_object_ ? weak_object_->lock() : 0));
     }
 
     WeakRcHandle(const WeakRcHandle& other)
@@ -166,8 +169,10 @@ namespace DCPS {
 
     RcHandle<T> lock() const {
       if (weak_object_){
+        ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) WeakRcHandle::lock - valid weak_object_\n")));
         return RcHandle<T>(dynamic_cast<T*>(weak_object_->lock()), keep_count());
       }
+      ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) WeakRcHandle::lock - invalid weak_object_\n")));
       return RcHandle<T>();
     }
 
