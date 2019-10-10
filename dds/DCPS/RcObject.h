@@ -135,7 +135,7 @@ namespace DCPS {
 
     WeakRcHandle(const RcHandle<T>& rch)
       : weak_object_(rch.in() ? rch.in()->_get_weak_object() : 0) {
-      ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) WeakRcHandle::WeakRcHandle - weak_object_: %@\n"), weak_object_ ? weak_object_->lock() : 0));
+      ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) WeakRcHandle::WeakRcHandle - weak_object_: %p\n"), weak_object_));
     }
 
     WeakRcHandle(const WeakRcHandle& other)
