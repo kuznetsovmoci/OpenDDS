@@ -80,7 +80,8 @@ namespace DCPS {
 const double QUICK_REPLY_DELAY_RATIO = 0.1;
 const size_t ONE_SAMPLE_PER_PACKET = 1;
 
-RtpsUdpDataLink::RtpsUdpDataLink(RtpsUdpTransport& transport,
+
+DataLink(RtpsUdpTransport& transport,
                                  const GuidPrefix_t& local_prefix,
                                  const RtpsUdpInst& config,
                                  const ReactorTask_rch& reactor_task)
@@ -591,6 +592,7 @@ RtpsUdpDataLink::release_reservations_i(const RepoId& remote_id,
 void
 RtpsUdpDataLink::stop_i()
 {
+  ACE_DEBUG((LM_DEBUG, "(%P|%t) RtpsUdpDataLink::stop_i - Stopping Datalink!\n"));
   nack_reply_.cancel();
   heartbeat_reply_.cancel();
   heartbeat_->disable();
@@ -3238,7 +3240,7 @@ RtpsUdpDataLink::RtpsWriter::RtpsWriter(RcHandle<RtpsUdpDataLink> link, const Re
  , heartbeat_count_(hbc)
 {
   RcHandle<RtpsUdpDataLink> temp = link_.lock();
-  ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) RtpsWriter::RtpsWriter - Link: %@"), (temp ? temp.get() : 0)));
+  ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) RtpsWriter::RtpsWriter - Link: %@, Temp: %@\n"), link.get(), (temp ? temp.get() : 0)));
   send_buff_->bind(link->send_strategy());
 }
 
