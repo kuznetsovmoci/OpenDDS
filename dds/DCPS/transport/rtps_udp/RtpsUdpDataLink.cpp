@@ -3237,6 +3237,8 @@ RtpsUdpDataLink::RtpsWriter::RtpsWriter(RcHandle<RtpsUdpDataLink> link, const Re
  , durable_(durable)
  , heartbeat_count_(hbc)
 {
+  RcHandle<RtpsUdpDataLink> temp = link_.lock();
+  ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) RtpsWriter::RtpsWriter - Link: %@"), (temp ? temp.get() : 0)));
   send_buff_->bind(link->send_strategy());
 }
 
