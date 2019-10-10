@@ -80,8 +80,7 @@ namespace DCPS {
 const double QUICK_REPLY_DELAY_RATIO = 0.1;
 const size_t ONE_SAMPLE_PER_PACKET = 1;
 
-
-DataLink(RtpsUdpTransport& transport,
+RtpsUdpDataLink::RtpsUdpDataLink(RtpsUdpTransport& transport,
                                  const GuidPrefix_t& local_prefix,
                                  const RtpsUdpInst& config,
                                  const ReactorTask_rch& reactor_task)
