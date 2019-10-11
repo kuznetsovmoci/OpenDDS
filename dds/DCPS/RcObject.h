@@ -169,8 +169,10 @@ namespace DCPS {
 
     RcHandle<T> lock() const {
       if (weak_object_) {
-        ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) WeakRcHandle::lock - valid weak_object_ - %@\n"), weak_object_));
-        return RcHandle<T>(dynamic_cast<T*>(weak_object_->lock()), keep_count());
+        RcObject* t1 = weak_object_->lock();
+        T* t2 = dynamic_cast<T*>(t1);
+        ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) WeakRcHandle::lock - valid weak_object_: %@, weak_object->lock(): %@, dynamic_cast: %@\n"), weak_object_, t1, t2));
+        return RcHandle<T>(t2, keep_count());
       }
       ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) WeakRcHandle::lock - invalid weak_object_\n")));
       return RcHandle<T>();
