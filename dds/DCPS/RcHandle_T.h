@@ -93,7 +93,12 @@ public:
   RcHandle& operator=(const RcHandle<U>& b)
   {
     RcHandle<T> tmp(b);
+    T* before = ptr_;
+    T* tmp_before = tmp.ptr_;
     swap(tmp);
+    T* after = ptr_;
+    T* tmp_after = tmp.ptr_;
+    ACE_DEBUG((LM_DEBUG, "(%P|%t) RcHandle::operator= with template - b.ptr_: %@, before: %@, after: %@, tmp_before: %@, tmp_after: %@\n", b.ptr_, before, after, tmp_before, tmp_after));
     return *this;
   }
 
