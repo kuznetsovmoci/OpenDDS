@@ -96,11 +96,12 @@ public:
   {
     RcHandle<T> tmp(b);
     T* before = ptr_;
-    T* tmp_before = tmp.ptr_;
+    //T* tmp_before = tmp.ptr_;
     swap(tmp);
     T* after = ptr_;
-    T* tmp_after = tmp.ptr_;
-    ACE_DEBUG((LM_DEBUG, "(%P|%t) RcHandle::operator= with template - b.ptr_: %@, before: %@, after: %@, tmp_before: %@, tmp_after: %@\n", b.ptr_, before, after, tmp_before, tmp_after));
+    //T* tmp_after = tmp.ptr_;
+    //ACE_DEBUG((LM_DEBUG, "(%P|%t) RcHandle::operator= with template - b.ptr_: %@, before: %@, after: %@, tmp_before: %@, tmp_after: %@\n", b.ptr_, before, after, tmp_before, tmp_after));
+    ACE_DEBUG((LM_DEBUG, "(%P|%t) RcHandle::operator= with template - before: %@, after: %@\n", before, after));
     return *this;
   }
 
