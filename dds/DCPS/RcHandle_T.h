@@ -50,12 +50,14 @@ public:
   RcHandle(const RcHandle<U>& other)
     : ptr_(other.in())
   {
+    ACE_DEBUG((LM_DEBUG, "(%P|%t) RcHandle::RcHandle - other.ptr_: %@, ptr_: %@\n", other.in(), ptr_));
     this->bump_up();
   }
 
   RcHandle(const RcHandle& b)
     : ptr_(b.ptr_)
   {
+    ACE_DEBUG((LM_DEBUG, "(%P|%t) RcHandle::RcHandle - b.ptr_: %@, ptr_: %@\n", b.in(), ptr_));
     this->bump_up();
   }
 
